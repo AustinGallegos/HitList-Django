@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}HitList{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
+</head>
+
+<body>
+    <div class="top-left">
+        <button onclick="home()">Home</button>
+    </div>
+    <div class="top-right">
+        <button onclick="logout()">Log Out</button>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <footer>Built with the Spotify Web API · by Austin</footer>
+
+    {% block scripts %}{% endblock %}
+
+    <script>
+		function home() {
+		const redirectURL = "{% url 'core:index' %}";
+		window.location.href = redirectURL;
+		}
+	</script>
+
+	<script>
+		function logout() {
+			fetch("{% url 'core:logout' %}", {
+				method: 'POST',
+				headers: {
+					'X-CSRFToken': getCookie('csrftoken')
+				},
+			}).then(() => {
+				window.location.href = "{% url 'core:index' %}";
+			});
+		}
+	</script>
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

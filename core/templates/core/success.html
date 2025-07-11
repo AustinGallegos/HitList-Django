@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Success{% endblock %}
+
+{% block content %}
+<main>
+	<img src="{% static 'core/images/main_logo.png' %}">
+	<h1>Success!</h1>
+
+	<img src="{{ image_link }}" alt="Album Cover" class="cover-img" />
+	<h1><strong>{{ track_name }} – {{ artist_name }}</strong></h1>
+	<h1><strong>Submitted for Hit of the Day! 🎵</strong></h1>
+
+	<button onclick="redirectToSubmitHit()">Submit Another</button>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	function redirectToSubmitHit() {
+		const redirectURL = "{% url 'core:submit a hit' %}";
+		window.location.href = redirectURL;
+	}
+</script>
+{% endblock %}

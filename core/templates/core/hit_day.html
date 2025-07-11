@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Hit of the Day{% endblock %}
+
+{% block content %}
+<main>
+	{% if is_premium %}
+		<h1>Hit of the Day:</h1>
+		<img src="{{ hit.image_link }}" alt="Album Cover" class="cover-img" />
+		<h1><strong>{{ hit.track_name }} – {{ hit.artist_name }}
+		</strong></h1>
+
+		{% if device_name %}
+		<h1><strong>Playing on your {{ device_name }} 🎵</strong></h1>
+		{% endif %}
+
+		<button onclick="redirect()">Submit a Hit</button>
+		
+	{% else %}
+	<h1>Upgrade to Premium to enjoy the Hit of the Day<span>🔒</span></h1>
+	<p>Some features require a Premium subscription 🎵</p>
+	{% endif %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	function redirect() {
+		const redirectURL = "{% url 'core:submit a hit' %}";
+		window.location.href = redirectURL;
+	}
+</script>	
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<main>
+	<img src="{% static 'core/images/main_logo.png' %}">
+	<h1>Welcome to HitList!</h1>
+	<p>Log in to Spotify to hear the Hit of the Day!</p>
+	<button onclick="redirect()">Log in</button>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	function redirect() {
+		let redirectURL;
+		{% if access_token %}
+		    redirectURL = "{% url 'core:hit of the day' %}";
+		{% else %}
+		    redirectURL = "{{ redirect_url|safe }}";
+		{% endif %}
+		window.location.href = redirectURL;
+	}
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Submit a Hit{% endblock %}
+
+{% block content %}
+<main>
+    <img src="{% static 'core/images/main_logo.png' %}">
+    <h1>Submit a Hit!</h1>
+
+    <form id="searchContainer" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Search for a hit...">
+        <button type="submit">Search</button>
+    </form>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function handleSearch() {
+        event.preventDefault();
+        const inputValue = document.getElementById("searchInput").value;
+        const redirectURL = `{% url 'core:search' %}?query=${encodeURIComponent(inputValue)}`;
+        window.location.href = redirectURL;
+    }
+</script>
+{% endblock %}
